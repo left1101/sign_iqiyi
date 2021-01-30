@@ -8,6 +8,7 @@ import requests
 
 Push_Key = '请填写key'
 Cookie='请填写cookie'
+Time_Hour = "08"
 
 def send_message(msg):
   api = "https://sc.ftqq.com/" + Push_Key + ".send"
@@ -40,17 +41,17 @@ def main_handler():
   while True:
     now_hour = time.strftime("%H", time.localtime())
     now_min = time.strftime("%M", time.localtime())
-    if now_hour < "12":
+    if now_hour < Time_Hour:
         rest = 8 - int(now_hour)
         sleeptime = (rest-1)*3600 + (60-int(now_min))*60
         print("启动时北京时间为："+time.strftime("%H:%M", time.localtime()),"\t软件将在",rest-1,"小时",int((sleeptime-(rest-1)*3600)/60),"分钟后发送数据")
         time.sleep(sleeptime)
-    elif now_hour > "12":
+    elif now_hour > Time_Hour:
         rest = 8 - int(now_hour) + 24
         sleeptime = (rest-1)*3600 + (60-int(now_min))*60
         print("启动时北京时间为："+time.strftime("%H:%M", time.localtime()),"\t软件将在",rest-1,"小时",int((sleeptime-(rest-1)*3600)/60),"分钟后发送数据")
         time.sleep(sleeptime)
-    elif now_hour == "12":
+    elif now_hour == Time_Hour:
         print("启动时北京时间为：" + time.strftime("%H:%M", time.localtime()), "\t软件将在每天8点发送数据！")
         # 以下为定时任务，定时执行签到任务
         start()
