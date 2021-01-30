@@ -1,4 +1,3 @@
 gunicorn
 gevent
-json
 requests
