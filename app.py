@@ -20,7 +20,7 @@ def send_message(title, msg):
   req = requests.post(api,data = data)
 
 def sign_txsp():
-  cookie1 = 'pgv_pvi=9353552896; RK=qa7YO9J9Yp; ptcz=80abfef4de76da1385a3d90662b89b5b3645d5ed3116c63dd17ace386a29c53a; pgv_pvid=5292434730; tvfe_boss_uuid=77711f62bc4474ff; o_cookie=1004212394; video_guid=77c5941c383a0f76; video_platform=2; pac_uid=1_1004212394; _mta_closed_sysmsg=/--20180926/--20190816; aics=H81xkjyviwG9v7VAqh89NniMWcVRWSe1Cse6ElNl; qb_guid=8198cf1a402d4030ad8ed6e4790a8566; Q-H5-GUID=8198cf1a402d4030ad8ed6e4790a8566; NetType=; iip=0; pgv_info=ssid=s7875822100; qqmusic_uin=; qqmusic_key=; qqmusic_fromtag=; _video_qq_login_time_init=1611320503; ptui_loginuin=1004212394; main_login=qq; vqq_access_token=BF6CB3F9D6DE3BEC1A6C352CDFCCE1F0; vqq_appid=101483052; vqq_openid=CEF1867E93F4583837596DAD7A54416F; vqq_vuserid=1706473958; vqq_vusession=PfCkepD1uA1WVixKVzcpwQ..; vqq_refresh_token=984586231A4FD7873AF64F5FA31A3A97; login_time_init=2021-1-31 15:2:0; uid=410393917; vqq_next_refresh_time=6543; vqq_login_time_init=1612076577; login_time_last=2021-1-31 15:2:57'
+  cookie1 = 'pgv_pvi=9353552896; RK=qa7YO9J9Yp; ptcz=80abfef4de76da1385a3d90662b89b5b3645d5ed3116c63dd17ace386a29c53a; pgv_pvid=5292434730; tvfe_boss_uuid=77711f62bc4474ff; o_cookie=1004212394; ts_uid=1343044272; tvfe_search_uid=21236dd0-6a89-4b17-a3af-6624baa83ccb; login_remember=qq; pac_uid=1_1004212394; _mta_closed_sysmsg=/--20180926/--20190816; aics=H81xkjyviwG9v7VAqh89NniMWcVRWSe1Cse6ElNl; qb_guid=8198cf1a402d4030ad8ed6e4790a8566; Q-H5-GUID=8198cf1a402d4030ad8ed6e4790a8566; NetType=; iip=0; ts_refer=so.iqiyi.com/; video_guid=77c5941c383a0f76; video_platform=2; pgv_info=ssid=s7875822100; qqmusic_uin=; qqmusic_key=; qqmusic_fromtag=; ptui_loginuin=1004212394; bucket_id=9231001; txv_boss_uuid=4c57ff9f-7047-5320-47f4-669a55ce582a; uid=410393917; ts_last=v.qq.com/; ptag=|é¡¶éƒ¨å¯¼èˆªåŒº:å¤´åƒæµ®å±‚:ç«‹å³ç™»å½•; main_login=qq; vqq_vuserid=1706473958; vqq_vusession=0RjMas8CcFf8aj1Eq_jyug..; vqq_access_token=BF6CB3F9D6DE3BEC1A6C352CDFCCE1F0; vqq_openid=CEF1867E93F4583837596DAD7A54416F; vqq_appid=101483052; qq_nick=left; qq_head=http://thirdqq.qlogo.cn/g?b=oidb&k=RRkyoZ1RHPlQsoKsich7ia4w&s=640&t=1556485691; lw_nick=left|0|http://thirdqq.qlogo.cn/g?b=oidb&k=RRkyoZ1RHPlQsoKsich7ia4w&s=640&t=1556485691|0; ad_play_index=14; qv_als=y4p2cRriJcEN5eMmA116132797318KiRFg=='
   this_time = int(round(time.time() * 1000))
   login_url = 'https://vip.video.qq.com/fcgi-bin/comm_cgi?name=hierarchical_task_system&cmd=2&_=' + str(this_time)
   headers={
@@ -51,8 +51,17 @@ def sign_iqiyi():
   sign=requests.get(url, headers=headers).text
   send_message("爱奇艺签到通知", sign)
 
+  draw_iqiyi(P00001, headers, 1)
+  draw_iqiyi(P00001, headers, 2)
+  draw_iqiyi(P00001, headers, 3)
+
   str=json.loads(sign)
   str=str["data"]["acquireGiftList"][0]
+
+def draw_iqiyi(cookie, headers, time):
+  url = 'https://iface2.iqiyi.com/aggregate/3.0/lottery_activity?app_k=0&app_v=0&platform_id=0&dev_os=0&dev_ua=0&net_sts=0&qyid=0&psp_uid=0&psp_cki=' + cookie[0] + '&psp_status=0&secure_p=0&secure_v=0&req_sn=0'
+  draw = requests.get(url, headers=headers).text
+  send_message("爱奇艺抽奖通知" + time, draw)
 
 def main_handler():
   while True:
