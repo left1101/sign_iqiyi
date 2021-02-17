@@ -51,17 +51,17 @@ def sign_iqiyi():
   sign=requests.get(url, headers=headers).text
   send_message("爱奇艺签到通知", sign)
 
-  draw_iqiyi(P00001, headers, 1)
-  draw_iqiyi(P00001, headers, 2)
-  draw_iqiyi(P00001, headers, 3)
+  draw_iqiyi(P00001, headers, "爱奇艺抽奖通知1")
+  draw_iqiyi(P00001, headers, "爱奇艺抽奖通知2")
+  draw_iqiyi(P00001, headers, "爱奇艺抽奖通知3")
 
   str=json.loads(sign)
   str=str["data"]["acquireGiftList"][0]
 
-def draw_iqiyi(cookie, headers, time):
+def draw_iqiyi(cookie, headers, title):
   url = 'https://iface2.iqiyi.com/aggregate/3.0/lottery_activity?app_k=0&app_v=0&platform_id=0&dev_os=0&dev_ua=0&net_sts=0&qyid=0&psp_uid=0&psp_cki=' + cookie[0] + '&psp_status=0&secure_p=0&secure_v=0&req_sn=0'
   draw = requests.get(url, headers=headers).text
-  send_message("爱奇艺抽奖通知" + time, draw)
+  send_message(title, draw)
 
 def main_handler():
   while True:
